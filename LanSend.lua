@@ -128,9 +128,13 @@ function RecvMessageLoop()
   bRecvLoop = true
   while true do -- data recv loop
     local data, err = s_udp:receive()
-    if data ~= nil and not err then
-      -- if get udp data, send {send} the data.
-      windower.send_command( "send " .. data )
+    if data ~= nil then
+      if not err then
+        -- if get udp data, send {send} the data.
+        windower.send_command( "send " .. data )
+      else
+        print( err )
+      end
     end
     coroutine.sleep(0.01) -- 100FPS
   end
